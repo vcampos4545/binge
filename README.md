@@ -1,6 +1,6 @@
-## Welcome to Binge!
+# Welcome to Binge!
 
-# A mobile application inspired by letterboxd, where friends can connect and rate movies.
+## A mobile application inspired by letterboxd, where friends can connect and rate movies.
 
 This started with the realization that letteboxd UI and social experience was lacking.  We see the opportunity to build upon letterboxd's rating system, implementing a rating system inspired by the restaurant rating app "Beli", as well as add new proprietrary recommendation models.
 A big feature that letterboxd does not have is a group movie recomender. 
