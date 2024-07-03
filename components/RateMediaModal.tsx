@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import {
-  View,
   Image,
-  Text,
   Modal,
-  TouchableOpacity,
   StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { Movie, Profile } from "../lib/types";
+import useMovies from "../hooks/useMovies";
+import useSession from "../hooks/useSession";
+import { Movie } from "../lib/types";
 
 interface Props {
   movie: Movie;
@@ -17,62 +19,11 @@ interface Props {
 }
 
 const RateMovieModal = ({ movie, isVisible, onClose }: Props) => {
+  const { user } = useSession();
+  const { ratedMovies } = useMovies();
   const [rateModalContent, updateRateModalContent] = useState("overall");
-  const [ratingOpinion, updateRatingOpinion] = useState(null);
-  const [comparisonMovie, updateComparisonMovie] = useState<Movie | null>(null);
-  const [activeRatingList, updateActiveRatingList] = useState<Movie[]>(ratedList);
 
   const getImageUrl = (path: string) => `https://image.tmdb.org/t/p/w92${path}`;
-
-  const handleContentChange = (newContent, overallOpinion) => {
-    updateRateModalContent(newContent);
-    updateRatingOpinion(overallOpinion);
-  };
-
-  const selectComparisonMovie = () => {
-    const randomIndex = Math.floor(Math.random() * activeRatingList.length); // Get a random index
-    updateComparisonMovie(activeRatingList[randomIndex]); // Set the random item
-  };
-
-  const handleProgressRating = (activeRatingList) => {
-    if (activeRatingList.length > 0) {
-      selectComparisonMovie();
-      activeRatingList;
-    } else {
-      addNewRanking("abc123", movie.id, movieRanking, ratingOpinion);
-    }
-  };
-
-  const removeMovie = (id: string) => {
-    // Use .filter() to exclude the item with the matching id
-    const filteredRatingList = activeRatingList.filter(
-      (item) => item.id !== id
-    );
-    updateActiveRatingList(filteredRatingList); // Update the state with the filtered list
-  };
-
-  const addNewRanking = async (username: Profile["username"], movie_id: string, rank: number, opinion: string) => {
-    const apiUrl = `http://192.168.1.243:8000/rated/movierank/rank/?username=${encodeURIComponent(
-      username
-    )}&tmdb_id=${encodeURIComponent(tmdb_id)}&rank=${encodeURIComponent(
-      rank
-    )}&opinion=${encodeURIComponent(opinion)}`;
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-    } catch (error) {
-      console.error("Error making POST request:", error);
-    }
-  };
-
-  //const handleUndo = () => {
-
-  //};
 
   return (
     <Modal
@@ -102,19 +53,19 @@ const RateMovieModal = ({ movie, isVisible, onClose }: Props) => {
                   style={[styles.ratingGroupButton, styles.badButton]} // Apply shared style and color for 'Bad' button
                   onPress={() => handleContentChange("compare", "Bad")}
                 >
-                  <Text style={styles.buttonText}>Bad</Text>
+                  <Text>Bad</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.ratingGroupButton, styles.fineButton]} // Apply shared style and color for 'Fine' button
                   onPress={() => handleContentChange("compare", "Fine")}
                 >
-                  <Text style={styles.buttonText}>Fine</Text>
+                  <Text>Fine</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.ratingGroupButton, styles.goodButton]} // Apply shared style and color for 'Good' button
                   onPress={() => handleContentChange("compare", "Good")} // Example: Rating 'Good' is set to 4
                 >
-                  <Text style={styles.buttonText}>Good</Text>
+                  <Text>Good</Text>
                 </TouchableOpacity>
               </View>
             </View>

@@ -16,6 +16,7 @@
     "expo": "~51.0.6",
     "expo-image-picker": "~15.0.4",
     "expo-status-bar": "~1.12.1",
+    "lodash": "^4.17.21",
     "react": "18.2.0",
     "react-native": "0.74.1",
     "react-native-elements": "^3.4.3",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/lodash": "^4.17.6",
     "@types/react": "~18.2.45",
     "typescript": "^5.1.3"
   },

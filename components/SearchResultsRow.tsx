@@ -24,7 +24,7 @@ const SearchResultRow = ({
     <View style={styles.rowContainer}>
       <Image
         // source={{ uri: getImageUrl(movie.coverImage) }}
-        source={{ uri: movie.coverImage }}
+        source={{ uri: getImageUrl(movie.coverImage) }}
         style={styles.coverImage}
       />
       <TouchableOpacity

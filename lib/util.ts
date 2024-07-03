@@ -1,22 +1,26 @@
-const searchMovies = async (query: string) => {
-  const apiUrl = `http://127.0.0.1:8000/rated/tmdb/search_movies?query=${encodeURIComponent(
+import { Movie } from "./types";
+import { supabase } from "./supabase";
+
+export async function searchMovies(query: string): Promise<Movie[]> {
+  const apiUrl = `http://127.0.0.1:5000/search?query=${encodeURIComponent(
     query
   )}`;
   try {
     const response = await fetch(apiUrl);
-    console.log(response);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
+    return data.data as Movie[];
   } catch (error) {
     console.error("Error fetching data: ", error);
+    return [];
   }
-};
+}
 
-const getMovieList = async (username: string) => {
-  const apiUrl = `http://127.0.0.1:8000/binge/movierank/user/${encodeURIComponent(
-    username
+export async function getMovieByTMDBID(tmdbId: string): Promise<Movie> {
+  const apiUrl = `http://127.0.0.1:5000/movies?tmdb_id=${encodeURIComponent(
+    tmdbId
   )}`;
   try {
     const response = await fetch(apiUrl);
@@ -24,7 +28,9 @@ const getMovieList = async (username: string) => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
+    return data.data as Movie;
   } catch (error) {
     console.error("Error fetching data: ", error);
+    return {} as Movie;
   }
-};
+}
